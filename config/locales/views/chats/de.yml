@@ -1,0 +1,24 @@
+---
+de:
+  chats:
+    demo_banner_title: Demo Modus aktiviert
+    demo_banner_message: Sie verwenden ein offenes Qwen3-LLM mit Credits, die von Cloudflare Workers AI bereitgestellt werden.  Die Ergebnisse können variieren, da die Codebasis hauptsächlich auf „gpt-4.1“ getestet wurde, Ihre Token jedoch nicht anderweitig zum Trainieren verwendet werden! 🤖
+    enable_ai:
+      title: KI-Chat aktivieren
+      description_available: Der KI-Chat kann Finanzfragen beantworten und Einblicke basierend auf deinen Daten geben. Um diese Funktion zu nutzen, musst du sie explizit aktivieren.
+      description_unavailable_html: Um den KI-Assistenten zu nutzen, musst du die Umgebungsvariable <code class="bg-surface-inset px-1 py-0.5 rounded font-mono text-xs">OPENAI_ACCESS_TOKEN</code> setzen oder sie in den Self-Hosting-Einstellungen konfigurieren.
+      submit: KI-Chat aktivieren
+      footer: Jederzeit deaktivierbar. Alle Daten die an unsere LLM-Anbieter gesendet werden sind anonymisiert.
+    welcome:
+      greeting: "Hey %{name}! Ich bin eine KI die dir bei deinen Finanzen helfen kann. Ich habe Zugriff auf das Web und deine Kontodaten."
+      fallback_name: du
+      commands_hint_html: 'Du kannst <span class="bg-container border border-secondary px-1.5 py-0.5 rounded font-mono text-xs">/</span> verwenden um auf Befehle zuzugreifen'
+      questions_intro: "Hier sind ein paar Fragen die du stellen kannst:"
+      questions:
+        portfolio: Investment-Portfolio bewerten
+        spending: Ausgaben-Einblicke zeigen
+        patterns: Ungewöhnliche Muster finden
+    form:
+      placeholder: Frag mich was ...
+      coming_soon: Demnächst verfügbar
+      disclaimer: KI-Antworten sind keine Finanzberatung.
