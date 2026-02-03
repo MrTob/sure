@@ -5,7 +5,11 @@ class TransactionsController < ApplicationController
   before_action :store_params!, only: :index
 
   def new
-    super
+    if params[:duplicate_from].present?
+      duplicate_from_entry
+    else
+      super
+    end
     @income_categories = Current.family.categories.incomes.alphabetically
     @expense_categories = Current.family.categories.expenses.alphabetically
   end
@@ -310,6 +314,41 @@ class TransactionsController < ApplicationController
     def set_entry_for_unlock
       transaction = Current.family.transactions.find(params[:id])
       @entry = transaction.entry
+    end
+
+    def duplicate_from_entry
+      source_entry = Current.family.entries.find(params[:duplicate_from])
+      source_transaction = source_entry.transaction
+
+      # If this is part of a transfer, redirect to new transfer form with pre-filled data
+      if source_transaction.transfer.present?
+        transfer = source_transaction.transfer
+        redirect_to new_transfer_path(
+          from_account_id: transfer.outflow_transaction.entry.account_id,
+          to_account_id: transfer.inflow_transaction.entry.account_id,
+          amount: transfer.outflow_transaction.entry.amount.abs
+        )
+        return
+      end
+
+      account = source_entry.account
+
+      # Determine nature: negative amount = inflow (income), positive = outflow (expense)
+      is_inflow = source_entry.amount.negative?
+      params[:nature] = is_inflow ? "inflow" : "outflow"
+
+      @entry = account.entries.new(
+        name: source_entry.name,
+        date: Date.current,
+        amount: source_entry.amount.abs,
+        currency: source_entry.currency,
+        notes: source_entry.notes,
+        entryable: Transaction.new(
+          category_id: source_transaction.category_id,
+          merchant_id: source_transaction.merchant_id,
+          tag_ids: source_transaction.tag_ids
+        )
+      )
     end
 
     def needs_rule_notification?(transaction)

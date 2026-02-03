@@ -103,6 +103,8 @@ en:
       drag_drop_subtitle: Upload transactions directly
       transaction: transaction
       transactions: transactions
+    selection_bar:
+      duplicate: Duplicate
     toggle_recurring_section: Toggle upcoming recurring transactions
     search:
       filters:

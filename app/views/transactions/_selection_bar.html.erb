@@ -7,6 +7,15 @@
 
   <div class="flex items-center gap-1 text-secondary">
     <%= turbo_frame_tag "bulk_transaction_edit_drawer" %>
+
+    <%# Duplicate button - only visible when exactly 1 transaction is selected %>
+    <%= link_to "#",
+                class: "p-1.5 group/duplicate hover:bg-inverse flex items-center justify-center rounded-md hidden",
+                title: t("transactions.selection_bar.duplicate"),
+                data: { turbo_frame: "modal", bulk_select_target: "duplicateButton" } do %>
+      <%= icon "copy", class: "group-hover/duplicate:text-inverse" %>
+    <% end %>
+
     <%= link_to new_transactions_bulk_update_path,
                 class: "p-1.5 group/edit hover:bg-inverse flex items-center justify-center rounded-md",
                 title: "Edit",

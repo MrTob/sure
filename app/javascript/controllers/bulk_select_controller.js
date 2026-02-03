@@ -8,11 +8,13 @@ export default class extends Controller {
     "selectionBar",
     "selectionBarText",
     "bulkEditDrawerHeader",
+    "duplicateButton",
   ];
   static values = {
     singularLabel: String,
     pluralLabel: String,
     selectedIds: { type: Array, default: [] },
+    duplicatePath: { type: String, default: "" },
   };
 
   connect() {
@@ -135,6 +137,18 @@ export default class extends Controller {
     this.selectionBarTarget.classList.toggle("hidden", count === 0);
     this.selectionBarTarget.querySelector("input[type='checkbox']").checked =
       count > 0;
+
+    // Show/hide duplicate button based on single selection
+    if (this.hasDuplicateButtonTarget) {
+      const showDuplicate = count === 1;
+      this.duplicateButtonTarget.classList.toggle("hidden", !showDuplicate);
+
+      // Update the duplicate button href with the selected entry ID
+      if (showDuplicate && this.duplicatePathValue) {
+        const entryId = this.selectedIdsValue[0];
+        this.duplicateButtonTarget.href = `${this.duplicatePathValue}?duplicate_from=${entryId}`;
+      }
+    }
   }
 
   _pluralizedResourceName() {
